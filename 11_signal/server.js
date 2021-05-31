@@ -40,17 +40,17 @@ app.use(express.static('./public'));
 
 //http server
 var http_server = http.createServer(app);
-http_server.listen(80, '0.0.0.0');
+http_server.listen(2021);
 
 var options = {
-	key : fs.readFileSync('./cert/1557605_www.learningrtc.cn.key'),
-	cert: fs.readFileSync('./cert/1557605_www.learningrtc.cn.pem')
+	key : fs.readFileSync('./cert/www.cynwml.cn.key'),
+	cert: fs.readFileSync('./cert/www.cynwml.cn.pem')
 }
 
 //https server
 var https_server = https.createServer(options, app);
 var io = socketIo.listen(https_server);
-
+//var io = socketIo(https_server);
 io.sockets.on('connection', (socket)=> {
 
 	socket.on('message', (room, data)=>{

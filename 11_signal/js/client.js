@@ -13,7 +13,7 @@ var socket;
 var room;
 
 btnConnect.onclick = ()=>{
-
+debugger
 	//connect
 	socket = io.connect(); 
 	
