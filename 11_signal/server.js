@@ -33,24 +33,24 @@ log4js.configure({
 var logger = log4js.getLogger();
 
 var app = express();
-app.use(serveIndex('./public'));
-app.use(express.static('./public'));
+app.use(serveIndex('./'));
+app.use(express.static('./'));
 
 
 
 //http server
 var http_server = http.createServer(app);
 http_server.listen(2021);
-
-var options = {
-	key : fs.readFileSync('./cert/www.cynwml.cn.key'),
-	cert: fs.readFileSync('./cert/www.cynwml.cn.pem')
-}
+var io = socketIo.listen(http_server);
 
 //https server
-var https_server = https.createServer(options, app);
-var io = socketIo.listen(https_server);
-//var io = socketIo(https_server);
+// var options = {
+// 	key : fs.readFileSync('./cert/www.cynwml.cn.key'),
+// 	cert: fs.readFileSync('./cert/www.cynwml.cn.pem')
+// }
+// var https_server = https.createServer(options, app);
+// var io = socketIo.listen(https_server);
+
 io.sockets.on('connection', (socket)=> {
 
 	socket.on('message', (room, data)=>{
@@ -103,7 +103,7 @@ io.sockets.on('connection', (socket)=> {
 
 });
 
-https_server.listen(443, '0.0.0.0');
+// https_server.listen(443, '0.0.0.0');
 
 
 
